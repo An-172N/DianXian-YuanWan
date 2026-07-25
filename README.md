@@ -9,6 +9,8 @@
 
 **本作并不是打砖块，可能偏向于文花帖这类作品** *（？*  
 
+**因为现在几乎不会怎么画画了所以就没有立绘了**  *（但像素画还是有的*
+
 **设定是有 4 面**  
 
 ---
@@ -41,7 +43,7 @@
 - ### 存日志
   - 按 Esc 不存
   - 按 Enter 存 *（存在 用户根目录/Saved Games/DX01 里*
-  - 可以存致谢人的名称 *（最多 8 个字符*
+  - 可以存裁判的名称 *（最多 8 个字符*
 - ### 看日志
   - 按 Esc 合上
   - 按 Del 扔掉
@@ -80,6 +82,7 @@
 - ### 擦弹
   - 每擦一次弹加 1 点累值
   - 在无敌时间不会加累值
+  - 被弹幕撞到剩余分数 + 4096
 - ### 无敌
   - 被弹幕撞到后有 3.5 秒的无敌时间
   - 释放累值后则有 2 秒
@@ -90,7 +93,7 @@
 - ### CHAR.md
   - 这是角色们的介绍文档
   - 分有主主角和主角 *（主角就是每面末站的 BOSS，按面数从上到下排*
-- ### DX00125.pyz
+- ### DX01.pyz
   - 游戏的主程序
   - 双击就可以开玩啦 *（要有 [Python 和 Pygame-CE 环境](#本项目使用以下第三方资源)*
 - ### LICENSE
@@ -106,7 +109,7 @@
   - 程序代码遵循 [GNU GPLv3.0](./LICENSE) 协议
   - 所有资产文件均保留所有权利 *（字体文件除外*
 - ### 本项目使用以下第三方资源
-  - 编程语言：[Python](https://www.python.org) *（需要安装哦*
+  - 编程语言：[Python](https://www.python.org) *（可能需要安装哦*
     - 推荐 3.11 - 3.15
   - 游戏库：[Pygame-CE](https://github.com/pygame-community/pygame-ce) *（这个也是*
     - 可以在命令提示符输入 pip install pygame-ce 回车
@@ -119,7 +122,7 @@
     - 制作：[PMD](http://www5.airnet.ne.jp/kajapon/tool.html) *（喜欢 YM2203*
     - 处理：[WaveShop](https://github.com/victimofleisure/WaveShop)
   - 图像：[Krita](https://krita.org/zh-cn)
-  - 打包：[Zipapp](https://docs.python.org/3/library/zipapp.html)
+  - 打包：[7-Zip](https://www.7-zip.org)
 - ### 本项目网址 *（感兴趣的话就点个星吧~*
   - https://github.com/An-172N/DianXian-YuanWan
 

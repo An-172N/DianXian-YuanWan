@@ -89,7 +89,7 @@ def get(folder, extension='.json', reverse=True):
         return [path for _, path in files]
     except:
         return []
-    
+
 
 def rectangle(size, border, color, radius=(-1, -1, -1, -1)):
     return (
@@ -164,34 +164,13 @@ class Invinc:
     def update(oc):
         if oc.condition:
             oc.timer += 1
-
             if oc.timer >= oc.end:
                 oc.func(*oc.func_args)
-
                 oc.timer = 0
                 oc.visitable = True
                 oc.condition = False
             else:
                 oc.visitable = (oc.timer // oc.blink_interval) % 2 == 1
-
-
-def collide(sprite1, sprite2):
-    if hasattr(sprite1, 'mask') and hasattr(sprite2, 'mask'):
-        return pygame.sprite.collide_mask(sprite1, sprite2)
-    elif hasattr(sprite1, 'radius') and hasattr(sprite2, 'radius'):
-        return pygame.sprite.collide_circle(sprite1, sprite2)
-    else:
-        return pygame.sprite.collide_rect(sprite1, sprite2)
-    
-
-def load(file, func, *args, decode='ascii'):
-    content = file.decode(decode)
-    lines = content.splitlines()
-
-    for row, line in enumerate(lines):
-        func(row, line, *args)
-
-    return content
 
 
 def carry(former, latter, start, final):
@@ -204,25 +183,9 @@ def carry(former, latter, start, final):
     return former, latter
 
 
-def pop_animate(surface, timer, interval, group, interval_color, shortly=False):
-    if not shortly:
-        if timer in interval:
-            if timer >= interval[2]:
-                color = interval_color[2]
-            elif timer >= interval[1]:
-                color = interval_color[1]
-            else:
-                color = interval_color[0]
-            surface.fill(color)
-            for i in range(len(group)):
-                if timer >= interval[i]:
-                    for j in group[i]:
-                        surface.blit(j[0], j[1])
-    else:
-        surface.fill(color)
-        for i in range(len(group)):
-            if timer >= interval[i]:
-                for j in group[i]:
-                    surface.blit(j[0], j[1])
+def one_shot(condition, power, critical):
+    if not condition and power >= critical:
+        condition = True
+        power -= critical
 
-    return surface
+    return condition, power
