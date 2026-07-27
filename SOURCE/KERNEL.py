@@ -22,7 +22,6 @@ class Basic(Base):
         super().__init__(image, brick_group, turn_image, pos=(300, 60))
         oc.barrage_group = barrage_group
         oc.particle_group = particle_group
-        oc.is_die = False
         oc.can_shoot = False
         oc.choice = None
         oc.down_timer = 9000
@@ -50,7 +49,7 @@ class Cle(Basic):
                 for p in pos:
                     p = vector(oc.rect.center, p, 28 * oc.bullets)[0]
                     angle = bearing((oc.locate[0], oc.locate[1] - 128), p)
-                    Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, rotate=True)
+                    Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.5
             oc.bullets += 1
             if oc.bullets % 3 == 0:
@@ -65,7 +64,7 @@ class Cle(Basic):
                     for p in pos:
                         p = vector(p, oc.rect.center, 24 * oc.bullets)[0]
                         angle = bearing(oc.locate, p) + i
-                        Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, rotate=True)
+                        Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.5
             oc.bullets += 1
             if oc.bullets % 3 == 0:
@@ -199,7 +198,7 @@ class Wyv(Basic):
                 angle = i + bearing((oc.locate[0], oc.locate[1] - 128), p)
                 rad = radians(angle) + oc.timer * 2
                 speed = 4 * (1 + 0.2 * cos(3 * rad))
-                Barrage(effective, speed, angle, p, oc.traingle_bullet_image, oc.barrage_group, 2, rotate=True)
+                Barrage(effective, speed, angle, p, oc.traingle_bullet_image, oc.barrage_group, 2, True)
             oc.bullets += 1
             sound_cache["fire"].play(maxtime=(51 if oc.bullets < 8 else 0))
 
@@ -214,7 +213,7 @@ class Wyv(Basic):
                     angle += 2 * (oc.bullets - 5)
                 image = oc.traingle_bullet_image if oc.bullets >= 6 else oc.circle_bullet_image
                 rotate = True if oc.bullets >= 6 else False
-                Barrage(effective, 4, angle, p, image, oc.barrage_group, 2, rotate=rotate)
+                Barrage(effective, 4, angle, p, image, oc.barrage_group, 2, rotate)
             oc.bullets += 1
             sound_cache["fire"].play(maxtime=(51 if oc.bullets < 16 else 0))
 
@@ -235,7 +234,7 @@ class Wyv(Basic):
                         offset_y = row * sprite_size * height_factor - center_offset_y
                         pos = rotate((p[0] + offset_x, p[1] + offset_y), i, p)
                         angle = bearing(p, pos)
-                        Barrage(effective, speed, angle, pos, oc.traingle_bullet_image, oc.barrage_group, 2, rotate=True)
+                        Barrage(effective, speed, angle, pos, oc.traingle_bullet_image, oc.barrage_group, 2, True)
                     speed -= 0.07
             sound_cache["fire"].play()
 
@@ -253,7 +252,7 @@ class Wyv(Basic):
                     offset_y = row * sprite_size * height_factor
                     angle = oc.bullets * 15
                     pos = rotate((p[0] + offset_x, p[1] + offset_y), angle, p)
-                    Barrage(effective, speed, angle, pos, oc.traingle_bullet_image, oc.barrage_group, 2, rotate=True)
+                    Barrage(effective, speed, angle, pos, oc.traingle_bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.3
             oc.bullets += 1
             if oc.bullets % 3 == 0:
@@ -274,7 +273,7 @@ class Wyv(Basic):
                 for _ in range(8):
                     for i in range(-30, 31, 15):
                         angle = original_angle + i
-                        Barrage(effective, speed2, angle, oc.rect.center, oc.traingle_bullet_image, oc.barrage_group, 2, rotate=True)
+                        Barrage(effective, speed2, angle, oc.rect.center, oc.traingle_bullet_image, oc.barrage_group, 2, True)
                     speed2 -= 0.5
             oc.bullets += 1
             if oc.bullets % 3 == 0:
@@ -286,7 +285,7 @@ class Wyv(Basic):
                 pos = coordinate(oc.rect.center, 60 * i, oc.bullets * 16)
                 for j in range(0, 360, 60):
                     angle = bearing(oc.rect.center, pos) + j + oc.bullets * 6 + bearing(oc.locate, pos)
-                    Barrage(effective, 3, angle, pos, oc.traingle_bullet_image, oc.barrage_group, 2, rotate=True)
+                    Barrage(effective, 3, angle, pos, oc.traingle_bullet_image, oc.barrage_group, 2, True)
             oc.bullets += 1
             if oc.bullets % 2 == 0:
                 sound_cache["fire"].play(maxtime=(34 if oc.bullets < 6 else 0))
@@ -316,7 +315,7 @@ class Wyv(Basic):
             for _ in range(32):
                 pos = oc.x + randint(-72, 72), oc.y + randint(-72, 72)
                 angle = bearing((oc.x, oc.y), pos)
-                Barrage(effective, 3, angle, pos, particle_image, oc.particle_group)
+                Barrage(effective, 4, angle, pos, particle_image, oc.particle_group)
             sound_cache["charge"].play()
         pg.sprite.spritecollide(oc, oc.particle_group, True)
         if oc.can_shoot:
@@ -332,7 +331,7 @@ class Flo(Basic):
         group = barrage_group, particle_group, brick_group
         super().__init__(subsurface((96, 0, 12, 26)), subsurface((108, 0, 12, 26)), *group)
         oc.bullet_image = barrage_cache[(1, color_dict[8])]
-        oc.goal = 180224
+        oc.goal = 196608
         oc.sd = (oc.d1, oc.d2, oc.d3, oc.d3, oc.d4, oc.d5)
 
     def d1(oc):
@@ -346,7 +345,7 @@ class Flo(Basic):
                     end_y = 180 + 180 * i
                     p = vector((x, start_y), (x, end_y), 30 * oc.bullets)[0]
                     angle += i * 180
-                    Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, rotate=True)
+                    Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.5
             oc.bullets += 1
             if oc.bullets % 3 == 0:
@@ -362,7 +361,7 @@ class Flo(Basic):
                     end_x = 300 + 180 * i
                     p = vector((start_x, oc.y), (end_x, oc.y), 12 * oc.bullets)[0]
                     angle += i * 180 + oc.bullets * 8
-                    Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, rotate=True)
+                    Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.5
             oc.bullets += 1
             if oc.bullets % 2 == 0:
@@ -384,7 +383,7 @@ class Flo(Basic):
                     for _ in range(8):
                         pos = vector(start, end, 16 * i)[0]
                         angle = bearing(oc.rect.center, pos) + i * 30
-                        Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, "c", True)
+                        Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, True)
                         speed -= 0.5
                 speed -= 0.5
             sound_cache["fire"].play()
@@ -405,7 +404,7 @@ class Flo(Basic):
                     for j in range(8):
                         pos = vector(start, end, 16 * i)[0]
                         angle = bearing(oc.rect.center, pos) + j * 15
-                        Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, rotate=True)
+                        Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, True)
                         speed -= 0.5
             sound_cache["fire"].play()
 
@@ -425,7 +424,7 @@ class Flo(Basic):
                     for k in (-30, 31, 60):
                         pos = vector(start, end, 16 * oc.bullets)[0]
                         angle = bearing(oc.rect.center, pos) + k
-                        Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, rotate=True)
+                        Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, True)
                     speed -= 0.5
             oc.bullets += 1
             if oc.bullets % 2 == 0:
@@ -446,7 +445,7 @@ class Flo(Basic):
             for _ in range(32):
                 pos = oc.x + randint(-64, 64), oc.y + randint(-64, 64)
                 angle = bearing((oc.x, oc.y), pos)
-                Barrage(effective, 3, angle, pos, particle_image, oc.particle_group)
+                Barrage(effective, 4, angle, pos, particle_image, oc.particle_group)
             sound_cache["charge"].play()
         pg.sprite.spritecollide(oc, oc.particle_group, True)
         if oc.can_shoot:
@@ -475,7 +474,7 @@ class Ewa(Basic):
                         end_y = 180 + 180 * j
                         p = vector((x, start_y), (x, end_y), rands[1] * i)[0]
                         angle += j * 180
-                        Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, rotate=True)
+                        Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                     speed -= 0.5
             sound_cache["fire"].play()
 
@@ -504,51 +503,52 @@ class Ewa(Basic):
 
 
 class Hro(Base):
-    def __init__(oc, plane_group: Group):
+    def __init__(oc, plane_group):
         subsurface = char_image.subsurface
         super().__init__(subsurface((0, 0, 12, 26)), plane_group, subsurface((12, 0, 12, 26)), pos=(300, 346))
-        oc.power = 8
-        oc.max_power = 48
-        oc.max_tired_counter = 24
+        oc.flash = 8
+        oc.max_flash = 48
+        oc.max_power = 24
         oc.max_collect_counter = 24
         oc.color = color_dict[6]
         oc.collided = Invinc(210, 6)
-        oc.tired_divided = Invinc(120, 4)
+        oc.divided = Invinc(120, 4)
         oc.rub_range = Base(pg.Surface((28, 28), pg.SRCALPHA), plane_group, radius=1)
         pg.draw.rect(oc.rub_range.image, color_dict[8], oc.rub_range.image.get_rect().inflate(-22, -22))
         oc.collect_counter = 0
-        oc.tired_counter = 0
+        oc.power = 0
         oc.is_fast = False
 
     def get_speed(oc):
         return 4, 2
 
     def add_power(oc):
-        oc.power, oc.collect_counter = carry(oc.power, oc.collect_counter, 0, oc.max_collect_counter - 1)
-        oc.power = clamp(oc.power, -oc.max_power, oc.max_power)
+        oc.flash, oc.collect_counter = carry(oc.flash, oc.collect_counter, 0, oc.max_collect_counter - 1)
+        oc.flash = clamp(oc.flash, -oc.max_flash, oc.max_flash)
 
     def tired(oc, barrage_group, item_group):
-        if oc.tired_divided.condition:
-            if oc.tired_divided.timer == 0:
+        if oc.divided.condition:
+            if oc.divided.timer == 0:
                 for barrage in barrage_group:
-                    Item("extra", 2.5, barrage.rect.center, item_group)
+                    Item(2.5, barrage.rect.center, item_group)
                     barrage.kill()
-            oc.tired_divided.update()
+            oc.divided.update()
 
     def use_tired(oc):
-        if oc.tired_counter >= oc.max_tired_counter:
-            oc.tired_divided.condition = True
-            oc.tired_counter -= oc.max_tired_counter
+        if oc.power >= oc.max_power:
+            oc.divided.condition = True
+            oc.power -= oc.max_power
             sound_cache["charge"].play()
 
     def reset_invinc(oc):
         oc.collided = Invinc(210, 6)
-        oc.tired_divided = Invinc(120, 4)
+        oc.divided = Invinc(120, 4)
 
     def update(oc):
         oc.collided.update()
         keys = pg.key.get_pressed()
         speed = oc.get_speed()
+        x = oc.x
         if keys[pg.K_LEFT]:
             oc.x -= speed[1] if oc.is_fast else speed[0]
         if keys[pg.K_RIGHT]:
@@ -558,7 +558,6 @@ class Hro(Base):
         if keys[pg.K_DOWN]:
             oc.y += speed[1] if oc.is_fast else speed[0]
         oc.is_fast = True if keys[pg.K_z] else False
-        x = oc.x
         oc.swivel(oc.x > x, oc.x < x)
         oc.x = clamp(oc.x, window.left, window.right)
         oc.y = clamp(oc.y, window.top, window.bottom)
@@ -567,12 +566,12 @@ class Hro(Base):
 
 class One:
     def __init__(oc):
-        oc.plane_group = pg.sprite.Group()
-        oc.bullet_group = pg.sprite.Group()
-        oc.brick_group = pg.sprite.Group()
-        oc.item_group = pg.sprite.Group()
-        oc.barrage_group = pg.sprite.Group()
-        oc.particle_group = pg.sprite.Group()
+        oc.plane_group = Group()
+        oc.bullet_group = Group()
+        oc.brick_group = Group()
+        oc.item_group = Group()
+        oc.barrage_group = Group()
+        oc.particle_group = Group()
         oc.is_pause = False
         oc.is_summary = False
         oc.is_talk = False
@@ -603,31 +602,30 @@ class Log:
     def __init__(oc):
         oc.name = ''
         oc.log = None
-        oc.json_files = get(f'{os.path.expanduser("~")}/Saved Games/DX01')
+        oc.json_files = get_files(f'{os.path.expanduser("~")}/Saved Games/DX01')
         oc.index = 0
         oc.total_files = len(oc.json_files)
 
 
-def score_summary(win: int, power: int, max_power: int) -> int:
+def score_summary(win, power, max_power):
     return (
         win * 16384 +
         int(power / max_power * 8192)
     )
 
 
-def load_json(filepath: str):
+def load_json(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
-def stage_loader(stage: int, barrage_group: Group, particle_group: Group, brick_group: Group):
-    char = choose_human(stage, barrage_group, particle_group, brick_group)
-    text = json.loads(asset(f"ASSET/JSON/{stage}.json").decode('utf-8'))
+def stage_loader(stage, barrage_group, particle_group, brick_group):
+    one.char = choose_human(stage, barrage_group, particle_group, brick_group)
+    one.text = json.loads(asset(f"ASSET/JSON/{stage}.json").decode('utf-8'))
+    one.is_talk = True
 
-    return char, text
 
-
-def choose_human(stage: int, barrage_group: Group, particle_group: Group, brick_group: Group):
+def choose_human(stage, barrage_group, particle_group, brick_group):
     return {
         1: Cle,
         2: Xsu,
@@ -636,16 +634,14 @@ def choose_human(stage: int, barrage_group: Group, particle_group: Group, brick_
     }[stage](barrage_group, particle_group, brick_group)
 
 
-def close_summary(is_talk: bool):
-    wait_load_timer = 0
-    is_level_load = True
-    pop_timer = 0
-    is_talk = True
-
-    return wait_load_timer, is_level_load, pop_timer, is_talk
+def close_summary():
+    two.wait_load_timer = 0
+    one.is_level_load = True
+    one.pop_timer = 0
+    one.is_talk = True
 
 
-def fade_surface(alpha: int, timer: int, is_exit: bool, surface: pg.Surface, screen: pg.Surface):
+def fade_surface(alpha, timer, is_exit, surface, screen):
     if is_exit:
         if timer % 30 == 0 and alpha < 255:
             alpha += 85
@@ -664,7 +660,7 @@ def fade_surface(alpha: int, timer: int, is_exit: bool, surface: pg.Surface, scr
     return alpha, timer
 
 
-def save_file(name: str, score: int, flashed: int, power: int, win: int, lose: int):
+def save_file(name, score, flashed, power, win, lose):
     name = name.translate(str.maketrans('!<>:"/\\|?*', '__________'))
     time = (datetime.now().strftime('%Y-%m-%d'), datetime.now().strftime('%H-%M-%S'))
     content = {
@@ -676,52 +672,15 @@ def save_file(name: str, score: int, flashed: int, power: int, win: int, lose: i
         'Power': power,
         'Date': time[0],
     }
-    record(f'{os.path.expanduser("~")}/Saved Games/DX01', f'{name}_{time[0]}_{time[1]}.json', ("DX01", content))
-
-
-class Basic(Base):
-    def __init__(oc, image: pg.Surface, locate: tuple, hp: int, color: tuple, *group: pg.sprite.Group):
-        super().__init__(image, group[2], pos=(300, 60))
-        oc.group = group[0]
-        oc.particle_group = group[1]
-        oc.locate = locate
-        oc.hp = hp
-        oc.color = color
-        oc.is_die = False
-        oc.can_shoot = False
-        oc.point = None
-        oc.choice = None
-        oc.timer = 0
-        oc.bullets = 0
-        oc.index = 0
-        oc.target_pos = (292, 60)
+    record_file(f'{os.path.expanduser("~")}/Saved Games/DX01', f'{name}_{time[0]}_{time[1]}.json', ("DX01", content))
 
 
 class Barrage(Base):
-    def __init__(oc, effective, speed, angle, pos, image, group, radius=0, form=None, rotate=False):
-        super().__init__(image, group, None, form, angle, pos, radius=radius, rotate=rotate)
+    def __init__(oc, effective, speed, angle, pos, image, group, radius=0, rotate=False):
+        super().__init__(image, group, None, angle, pos, radius=radius, rotate=rotate)
         oc.effective = effective
         oc.is_rubbed = False
         oc.speed = speed
-        oc.original_speed = speed
-
-    def update(oc):
-        rad = radians(oc.angle)
-        sin_, cos_ = sin(rad), cos(rad)
-        oc.x, oc.y = oc.x - (sin_ * oc.speed), oc.y - (cos_ * oc.speed)
-        if hasattr(oc, "type") and oc.type == "c":
-            oc.speed -= 0.5
-            if oc.speed < -oc.original_speed:
-                oc.speed = -oc.original_speed
-        if not oc.effective.collidepoint(oc.rect.center):
-            oc.kill()
-
-class Bullet(Base):
-    def __init__(oc, effective, speed, angle, pos, damage, image, group, form=None, rotate=False):
-        super().__init__(image, group, None, form, angle, pos, rotate=rotate)
-        oc.effective = effective
-        oc.speed = speed
-        oc.damage = damage
 
     def update(oc):
         rad = radians(oc.angle)
@@ -732,22 +691,19 @@ class Bullet(Base):
 
 
 class Item(Base):
-    def __init__(oc, type: str, speed: float, pos: tuple, group: Group):
-        super().__init__(item_cache, group, form=type, pos=pos, radius=4)
+    def __init__(oc, speed, pos, group):
+        super().__init__(item_cache, group, pos=pos)
         oc.speed = speed
-        oc.should_kill = False
 
-    def update(oc, locate: tuple):
+    def update(oc, locate):
         oc.speed -= 0.1
         if oc.speed <= 0:
             oc.rect.center = vector(oc.rect.center, locate, 8)[0]
         else:
             oc.y -= oc.speed
-        if oc.y >= 375:
-            oc.kill()
 
 
-def spawn_particles(group: Group, size: int, pos: tuple, speeds: tuple, color1: tuple, color2: tuple=None):
+def spawn_particles(group, size, pos, speeds, color1, color2=None):
     rands = randint(0, 60)
     for i in range(0 + rands, 360 + rands, 60):
         color = color1 if color2 is None else choice([color1, color2])
@@ -763,24 +719,16 @@ def reset():
     major.__init__(one.plane_group)
 
 
-def situation(clock: pg.Clock):
-    text = (
-        f"{two.score:9d}",
-        f"{(one.char.goal if one.char is not None else 0):9d}",
-        f"{(one.char.down_timer if one.char is not None else 0):9d}",
-        f"{major.power:9d}",
-        f"{major.tired_counter:9d}",
-        f"{int(clock.get_fps()):9d}",
-    )
+def situation(clock):
     for info in (
-        {"text": text[0], "pos": (39, 25)},
-        {"text": text[1], "pos": (39, 50)},
-        {"text": text[2], "pos": (39, 75)},
-        {"text": text[3], "pos": (39, 125)},
-        {"text": text[4], "pos": (39, 150)},
-        {"text": text[5], "pos": (39, 200)}
+        (f"{two.score:9d}", (39, 25)),
+        (f"{(one.char.goal if one.char is not None else 0):9d}", (39, 50)),
+        (f"{(one.char.down_timer if one.char is not None else 0):9d}", (39, 75)),
+        (f"{major.flash:9d}", (39, 125)),
+        (f"{major.power:9d}", (39, 150)),
+        (f"{int(clock.get_fps()):9d}", (39, 200))
     ):
-        screen.blit(font.render(info["text"], False, color_dict[8]), info["pos"])
+        screen.blit(font.render(info[0], False, color_dict[8]), info[1])
 
 
 def pause_menu():
@@ -809,16 +757,17 @@ def talk_menu():
 def summary_menu():
     hit = 'Hit Z Key.' if one.pop_timer >= 60 else ''
     stage = f"Stage {get_stage(two.stage)} Clear! {hit}"
-    total_max_power = major.max_power
-    total_power = major.power
+    win = one.win
+    max_flash = major.max_flash
+    flash = major.flash
     text = (
-        f"输赢 {one.win} * 16384 = {one.win * 16384}",
-        f"总形 {total_power} / {total_max_power} * 8192 = {int(total_power / total_max_power * 8192)}"
+        f"输赢 {win} * 16384 = {win * 16384}",
+        f"形闪 {flash} / {max_flash} * 8192 = {int(flash / max_flash * 8192)}"
     )
     half_menu(stage, text)
 
 
-def start_menu(version: str, title: str):
+def start_menu(version, title):
     other = "(C)opyright 2026 An_172N"
     text = (f"Ver {version}",)
     key = ("Q 回家", "C 日志" if logs.total_files > 0 else "C 木鱼", "Z 开玩")
@@ -829,7 +778,7 @@ def save_menu():
     title = "玩耍日志"
     name = f"{f'由 {logs.name} 当裁判' if one.pop_timer >= 60 else ''}"
     date = datetime.now().strftime('%Y-%m-%d')
-    text = get_logs(date, two.score, two.flashed, major.power, two.win, two.lose)
+    text = get_logs(date, two.score, two.flashed, major.flash, two.win, two.lose)
     key = ("Esc 算了", "Ent 记录")
     keys = pg.key.get_pressed()
     shortly = one.pop_timer == 60 or (one.pop_timer >= 60 and any(keys[i] for i in range(len(keys))))
@@ -838,8 +787,11 @@ def save_menu():
 
 def check_menu():
     try:
-        log = load_json(logs.json_files[logs.index])[1]
-        title = f"玩耍日志簿第 {logs.total_files - logs.index} / {logs.total_files} 页"
+        if not logs.log:
+            logs.log = load_json(logs.json_files[logs.index])[1]
+        total_files = logs.total_files
+        log = logs.log
+        title = f"玩耍日志簿第 {total_files - logs.index} / {total_files} 页"
         text = get_logs(log['Date'], log['Score'], log['Flashed'], log['Power'], log['Win'], log['Lose'])
         key = ("Esc 合上", "Del 丢掉", "<-> 翻页")
         full_menu(title, text, key, f"由 {log['Name']} 当裁判")
@@ -847,17 +799,17 @@ def check_menu():
         one.is_check = False
 
 
-def full_menu(title: str, text: list, key: list, other: str, interval: tuple=(0, 30, 60), shortly=False):
+def full_menu(title, text, key, other, interval=(0, 30, 60), shortly=False):
     group = (
         (
-            (font.render(title, False, (255, 255, 255)), (8, 335)),
-            (font.render(other, False, (255, 255, 255)), (8, 10))
+            (font.render(title, False, color_dict[8]), (8, 335)),
+            (font.render(other, False, color_dict[8]), (8, 10))
         ),
         (
-            *[(font.render(text[i], False, (255, 255, 255)), (8, 310 - (25 * i))) for i in range(len(text))],
+            *[(font.render(text[i], False, color_dict[8]), (8, 310 - (25 * i))) for i in range(len(text))],
         ),
         (
-            *[(font.render(key[i], False, (255, 255, 255)), (8, 60 + (25 * i))) for i in range(len(key))],
+            *[(font.render(key[i], False, color_dict[8]), (8, 60 + (25 * i))) for i in range(len(key))],
         )
     )
     if one.pop_timer == interval[2]:
@@ -869,11 +821,11 @@ def full_menu(title: str, text: list, key: list, other: str, interval: tuple=(0,
         one.pop_timer += 1
 
 
-def half_menu(title: str, text: list, interval: tuple=(0, 30, 60)):
+def half_menu(title, text, interval=(0, 30, 60)):
     group = (
-        ((font.render(title, False, (255, 255, 255)), (8, 10)),),
-        ((font.render(text[0], False, (255, 255, 255)), (8, 60)),),
-        ((font.render(text[1], False, (255, 255, 255)), (8, 85)),)
+        ((font.render(title, False, color_dict[8]), (8, 10)),),
+        ((font.render(text[0], False, color_dict[8]), (8, 60)),),
+        ((font.render(text[1], False, color_dict[8]), (8, 85)),)
     )
     colors = (color_dict[8], color_dict[9], color_dict[10])
     surface = picture[5].subsurface((0, 0, 360, 110))
@@ -917,8 +869,8 @@ def summary_logic():
         one.plane_group.add(major, major.rub_range)
         two.stage += 1
 
-    total_max_power = major.max_power
-    total_power = major.power
+    total_max_power = major.max_flash
+    total_power = major.flash
     two.score += score_summary(one.win, total_power, total_max_power)
     one.is_summary = False
     one.pop_timer = 0
@@ -926,6 +878,13 @@ def summary_logic():
         one.is_save = True
     else:
         level_logic()
+
+
+def stage3(first, second):
+    if one.char.sd == (one.char.d1, one.char.d2, one.char.d5, one.char.d3, one.char.d4):
+        one.text_part += first
+    else:
+        one.text_part += second
 
 
 def talk_logic():
@@ -942,24 +901,17 @@ def talk_logic():
                     one.win += 1
             else:
                 if one.char.goal > 0:
-                    if one.char.sd == (one.char.d1, one.char.d2, one.char.d5, one.char.d3, one.char.d4):
-                        one.text_part += 4
-                    else:
-                        one.text_part += 3
+                    stage3(4, 3)
                     two.lose += 1
                     one.win -= 1
                 else:
-                    if one.char.sd == (one.char.d1, one.char.d2, one.char.d5, one.char.d3, one.char.d4):
-                        one.text_part += 2
-                    else:
-                        one.text_part += 1
+                    stage3(2, 1)
                     two.win += 1
                     one.win += 1
         elif isinstance(one.char, Ewa):
             if one.char.goal > 0:
                 one.text_part += 3
                 two.lose += 1
-                one.win = 1
             else:
                 one.text_part += 2
                 two.win += 1
@@ -1001,7 +953,7 @@ def key_event():
                 keydown_talk_dict[event.key]()
                 sound_cache["pick"].play()
                 setattr(one, "pop_timer", 0)
-            elif not one.is_summary and one.is_level_load and not one.is_talk and not one.is_pause and event.key in keydown_game_dict:
+            elif one.is_level_load and event.key in keydown_game_dict and not (one.is_summary or one.is_talk or one.is_pause):
                 keydown_game_dict[event.key]()
 
 
@@ -1017,28 +969,28 @@ def item_collide():
 def barrage_collide():
     pos = major.rect.center
     for barrage in one.barrage_group:
-        invinc_condition = not major.collided.condition and not major.tired_divided.condition
+        invinc_condition = not major.collided.condition and not major.divided.condition
         if pg.sprite.collide_circle(major.rub_range, barrage):
             if invinc_condition:
                 major.collided.condition = True
-                major.power = clamp(major.power - 4, -8, major.max_power)
+                major.flash = clamp(major.flash - 4, -8, major.max_flash)
                 two.flashed += 1
-                one.char.goal += 4096
+                one.char.goal += 2048
                 for _ in range(8):
                     spawn_particles(one.particle_group, 2, pos, (6, 12), major.color, color_dict[8])
                 sound_cache["fire"].play()
             barrage.kill()
         if pg.sprite.collide_rect(major.rub_range, barrage) and not barrage.is_rubbed and invinc_condition:
-            major.tired_counter = clamp(major.tired_counter + 1, 0, major.max_tired_counter)
+            major.power = clamp(major.power + 1, 0, major.max_power)
             sound_cache['tick'].play(maxtime=24)
             barrage.is_rubbed = True
 
 
-def display(clock: pg.Clock, version: str, title: str):
+def display(clock, version, title):
     if two.is_run:
         screen.blit(picture[two.stage], (120, 0))
         one.brick_group.draw(screen)
-        if major.collided.visitable and major.tired_divided.visitable:
+        if major.collided.visitable and major.divided.visitable:
             one.plane_group.draw(screen)
         one.item_group.draw(screen)
         one.particle_group.draw(screen)
@@ -1054,16 +1006,16 @@ def display(clock: pg.Clock, version: str, title: str):
     situation(clock)
 
 
-def update(clock: pg.Clock, args: tuple, version: str, title: str):
-    two.stage = clamp(args[0], 1, 4)
+def update(clock, stage, version, title):
+    two.stage = clamp(stage, 1, 4)
     alpha = 255
     timer = 0
     for info in (
         ("分", (9, 25)),
         ("剩", (9, 50)),
         ("时", (9, 75)),
-        ('形', (9, 125)),
-        ('累', (9, 150)),
+        ('闪', (9, 125)),
+        ('形', (9, 150)),
         ("刷", (9, 200))
     ):
         picture[6].blit(font.render(info[0], False, color_dict[8]), info[1])
@@ -1084,11 +1036,10 @@ def update(clock: pg.Clock, args: tuple, version: str, title: str):
             if not one.is_level_load:
                 if two.wait_load_timer <= 90:
                     if two.wait_load_timer == 0:
-                        one.char, one.text = stage_loader(two.stage, one.barrage_group, one.particle_group, one.brick_group)
-                        one.is_talk = True
+                        stage_loader(two.stage, one.barrage_group, one.particle_group, one.brick_group)
                     two.wait_load_timer += 1
                 else:
-                    two.wait_load_timer, one.is_level_load, one.pop_timer, one.is_talk = close_summary(one.is_talk)
+                    close_summary()
         display(clock, version, title)
         alpha, timer = fade_surface(alpha, timer, one.is_exit, picture[7], screen)
         pg.display.flip()
@@ -1127,7 +1078,7 @@ keydown_start_dict = {
 
 
 keydown_over_dict = {
-    pg.K_RETURN: lambda: (save_file(logs.name, two.score, two.flashed, major.power, two.win, two.lose), reset()),
+    pg.K_RETURN: lambda: (save_file(logs.name, two.score, two.flashed, major.flash, two.win, two.lose), reset()),
     pg.K_ESCAPE: lambda: reset(),
     pg.K_BACKSPACE: lambda: setattr(logs, "name", logs.name[:-1])
 }
@@ -1135,7 +1086,7 @@ keydown_over_dict = {
 
 keydown_check_dict = {
     pg.K_DELETE: lambda: (os.remove(logs.json_files[logs.index]), logs.__init__()),
-    pg.K_ESCAPE: lambda: (setattr(one, "is_check", False), logs.__init__()),
+    pg.K_ESCAPE: lambda: (setattr(one, "is_check", False), reset()),
     pg.K_LEFT: lambda: (setattr(logs, "index", (logs.index - 1) if logs.index > 0 else logs.total_files - 1)),
     pg.K_RIGHT: lambda: (setattr(logs, "index", (logs.index + 1) if logs.index < logs.total_files - 1 else 0))
 }

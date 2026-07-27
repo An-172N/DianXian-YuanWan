@@ -34,12 +34,12 @@ stage_title = (
 
 asset = lambda path: get_data(__name__, path)
 get_stage = lambda stage: stage if stage < 4 else 'Final'
-get_logs = lambda date, score, flashed, power, win, lose: (
+get_logs = lambda date, score, flashed, flash, win, lose: (
     f"今天是 {date}",
     f"得到了 {score} 分",
     f"输赢各为 {lose} 跟 {win}",
     f"使用了 {flashed} 次形闪",
-    f"最终形力为 {power} 点"
+    f"最终形闪点为 {flash} 点"
 )[::-1]
 screen = pygame.display.set_mode((480, 360), pygame.FULLSCREEN|pygame.SCALED)
 font = pg.font.Font(BytesIO(asset('ASSET/FONT/UNI3500.otf')), 15)
@@ -81,6 +81,6 @@ item_cache = rectangle((9, 9), 2, color_dict[6]).convert()
 
 
 particle_cache = {
-    (2, color_dict[6]): white_rect.subsurface((0, 0, 2, 2)),
-    (2, color_dict[8]): rectangle((2, 2), 0, color_dict[8]).convert(),
+    (2, color_dict[6]): rectangle((2, 2), 0, color_dict[6]).convert(),
+    (2, color_dict[8]): white_rect.subsurface((0, 0, 2, 2)),
 }

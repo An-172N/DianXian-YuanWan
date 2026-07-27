@@ -53,13 +53,6 @@ def clamp(value, minimum, maximum):
         return value
 
 
-def fibonacci(former: float, latter: float, frequency: int):
-    for _ in range(0, frequency + 1):
-        former, latter = latter, former + latter
-
-    return former
-
-
 def bearing(point_a, point_b):
     ax, ay = point_a
     bx, by = point_b
@@ -67,17 +60,17 @@ def bearing(point_a, point_b):
     return math.degrees(math.atan2(bx - ax, by - ay)) % 360
 
 
-def record(folder, file, content, encoding='utf-8'):
+def record_file(folder, file, content, encoding='utf-8'):
     if not os.path.exists(folder):
         os.makedirs(folder)
     dump = [content[0]]
     dump.append(content[1])
 
     with open(f'{folder}/{file}', 'w', encoding=encoding) as f:
-        return json.dump(dump, f, indent=4)
+        json.dump(dump, f, indent=4)
 
 
-def get(folder, extension='.json', reverse=True):
+def get_files(folder, extension='.json', reverse=True):
     try:
         files = []
         for file in os.listdir(folder):
@@ -106,7 +99,7 @@ def circle(xy_size, border, color):
 
 
 class Base(pygame.sprite.Sprite):
-    def __init__(oc, original_image, group=None, turn_image=None, form=None, angle=0, pos=(0, 0), mask=False, radius=None, rotate=False):
+    def __init__(oc, original_image, group=None, turn_image=None, angle=0, pos=(0, 0), radius=None, rotate=False):
         super().__init__(group) if group is not None else super().__init__()
         oc.original_image = original_image
         oc.turn_image = turn_image
@@ -117,10 +110,6 @@ class Base(pygame.sprite.Sprite):
         oc.angle = angle
         if radius:
             oc.radius = radius
-        if mask:
-            oc.mask = pygame.mask.from_surface(oc.image)
-        if form is not None:
-            oc.type = form
         oc._x, oc._y = pos
 
     @property
@@ -151,12 +140,9 @@ class Base(pygame.sprite.Sprite):
 
 
 class Invinc:
-    def __init__(oc, end, blink_interval, func=lambda: None, *func_args):
+    def __init__(oc, end, blink_interval):
         oc.end = end
         oc.blink_interval = blink_interval
-        oc.func = func
-        oc.func_args = func_args
-
         oc.condition = False
         oc.visitable = True
         oc.timer = 0
@@ -165,7 +151,6 @@ class Invinc:
         if oc.condition:
             oc.timer += 1
             if oc.timer >= oc.end:
-                oc.func(*oc.func_args)
                 oc.timer = 0
                 oc.visitable = True
                 oc.condition = False

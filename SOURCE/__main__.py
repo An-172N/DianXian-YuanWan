@@ -10,15 +10,15 @@ import random
 def main():
     project = '点线 Project'
     title = '圆玩 ~ Oceanfront'
-    version = '0.1'
+    version = '1.0.0'
     author = 'An_172N'
     sys.dont_write_bytecode = True
     sys.modules['numpy'] = None
     parser = argparse.ArgumentParser()
-    for i, j in (('-s', 1), ('-l', 1), ('-sd', None)):
+    for i, j in (('-s', 1), ('-sd', None)):
         parser.add_argument(i, type=int, default=j)
     args = parser.parse_args()
-    args_tuple = (int(args.s), int(args.l))
+    stage = int(args.s)
     random.seed(args.sd)
 
     import pygame
@@ -33,7 +33,7 @@ def main():
     import KERNEL
 
     print(f"{project} | {title} | Ver {version} | By {author}")
-    KERNEL.update(clock, args_tuple, version, title)
+    KERNEL.update(clock, stage, version, title)
 
 
 if __name__ == "__main__":
