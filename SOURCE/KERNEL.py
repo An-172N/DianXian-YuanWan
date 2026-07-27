@@ -787,7 +787,7 @@ def save_menu():
 
 def check_menu():
     try:
-        if not logs.log:
+        if one.pop_timer == 0:
             logs.log = load_json(logs.json_files[logs.index])[1]
         total_files = logs.total_files
         log = logs.log
