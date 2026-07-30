@@ -1,17 +1,15 @@
 # (C)opyright 2026 An_172N
 # 此代码遵循 GPLv3.0 协议
 
-
 import sys
 import os
+import json
 from datetime import datetime
 from random import randint, choice, uniform
 from math import sin, cos, radians
 
-
 import pygame as pg
 from pygame.sprite import Group
-
 
 from PRELOAD import *
 from LOGIC import *
@@ -47,7 +45,7 @@ class Cle(Basic):
                 delay_angle = oc.bullets * i
                 pos = [coordinate(oc.rect.center, i, 256) for i in (-20 - delay_angle, -40 - delay_angle, -140 + delay_angle, -160 + delay_angle)]
                 for p in pos:
-                    p = vector(oc.rect.center, p, 28 * oc.bullets)[0]
+                    p = vector(oc.rect.center, p, 28 * oc.bullets)
                     angle = bearing((oc.locate[0], oc.locate[1] - 128), p)
                     Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.5
@@ -62,7 +60,7 @@ class Cle(Basic):
             for _ in range(6):
                 for i in range(-60, 61, 120):
                     for p in pos:
-                        p = vector(p, oc.rect.center, 24 * oc.bullets)[0]
+                        p = vector(p, oc.rect.center, 24 * oc.bullets)
                         angle = bearing(oc.locate, p) + i
                         Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.5
@@ -96,7 +94,7 @@ class Cle(Basic):
         if oc.can_shoot:
             oc.choice()
         delay = oc.x
-        oc.x, oc.y = vector((oc.x, oc.y), oc.target_pos, 4)[0]
+        oc.x, oc.y = vector((oc.x, oc.y), oc.target_pos, 4)
         oc.swivel(oc.x < delay, oc.x > delay)
 
 
@@ -177,7 +175,7 @@ class Xsu(Basic):
         if oc.can_shoot:
             oc.choice()
         delay = oc.x
-        oc.x, oc.y = vector((oc.x, oc.y), oc.target_pos, 4)[0]
+        oc.x, oc.y = vector((oc.x, oc.y), oc.target_pos, 4)
         oc.swivel(oc.x < delay, oc.x > delay)
 
 
@@ -321,7 +319,7 @@ class Wyv(Basic):
         if oc.can_shoot:
             oc.choice()
         delay = oc.x
-        oc.x, oc.y = vector((oc.x, oc.y), oc.target_pos, 4)[0]
+        oc.x, oc.y = vector((oc.x, oc.y), oc.target_pos, 4)
         oc.swivel(oc.x < delay, oc.x > delay)
 
 
@@ -343,7 +341,7 @@ class Flo(Basic):
                     x = 300 - 180 * i
                     start_y = 180 - 180 * i
                     end_y = 180 + 180 * i
-                    p = vector((x, start_y), (x, end_y), 30 * oc.bullets)[0]
+                    p = vector((x, start_y), (x, end_y), 30 * oc.bullets)
                     angle += i * 180
                     Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.5
@@ -359,7 +357,7 @@ class Flo(Basic):
                 for i in (-1, 1):
                     start_x = 300 - 180 * i
                     end_x = 300 + 180 * i
-                    p = vector((start_x, oc.y), (end_x, oc.y), 12 * oc.bullets)[0]
+                    p = vector((start_x, oc.y), (end_x, oc.y), 12 * oc.bullets)
                     angle += i * 180 + oc.bullets * 8
                     Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                 speed -= 0.5
@@ -381,7 +379,7 @@ class Flo(Basic):
                 for start, end in pos_pairs:
                     speed = 5
                     for _ in range(8):
-                        pos = vector(start, end, 16 * i)[0]
+                        pos = vector(start, end, 16 * i)
                         angle = bearing(oc.rect.center, pos) + i * 30
                         Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, True)
                         speed -= 0.5
@@ -402,7 +400,7 @@ class Flo(Basic):
                 for start, end in pos_pairs:
                     speed = 5
                     for j in range(8):
-                        pos = vector(start, end, 16 * i)[0]
+                        pos = vector(start, end, 16 * i)
                         angle = bearing(oc.rect.center, pos) + j * 15
                         Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, True)
                         speed -= 0.5
@@ -422,7 +420,7 @@ class Flo(Basic):
                 speed = 5
                 for _ in range(6):
                     for k in (-30, 31, 60):
-                        pos = vector(start, end, 16 * oc.bullets)[0]
+                        pos = vector(start, end, 16 * oc.bullets)
                         angle = bearing(oc.rect.center, pos) + k
                         Barrage(effective, speed, angle, pos, oc.bullet_image, oc.barrage_group, 2, True)
                     speed -= 0.5
@@ -472,7 +470,7 @@ class Ewa(Basic):
                         x = 300 - 180 * j
                         start_y = 180 - 180 * j
                         end_y = 180 + 180 * j
-                        p = vector((x, start_y), (x, end_y), rands[1] * i)[0]
+                        p = vector((x, start_y), (x, end_y), rands[1] * i)
                         angle += j * 180
                         Barrage(effective, speed, angle, p, oc.bullet_image, oc.barrage_group, 2, True)
                     speed -= 0.5
@@ -498,7 +496,7 @@ class Ewa(Basic):
         if oc.can_shoot:
             oc.choice()
         delay = oc.x
-        oc.x, oc.y = vector((oc.x, oc.y), oc.target_pos, 4)[0]
+        oc.x, oc.y = vector((oc.x, oc.y), oc.target_pos, 4)
         oc.swivel(oc.x < delay, oc.x > delay)
 
 
@@ -602,7 +600,7 @@ class Log:
     def __init__(oc):
         oc.name = ''
         oc.log = None
-        oc.json_files = get_files(f'{os.path.expanduser("~")}/Saved Games/DX01')
+        oc.json_files = get_files(f'{os.path.expanduser("~")}/Saved Games/DX01', '.json')
         oc.index = 0
         oc.total_files = len(oc.json_files)
 
@@ -672,7 +670,7 @@ def save_file(name, score, flashed, power, win, lose):
         'Power': power,
         'Date': time[0],
     }
-    record_file(f'{os.path.expanduser("~")}/Saved Games/DX01', f'{name}_{time[0]}_{time[1]}.json', ("DX01", content))
+    record_json(f'{os.path.expanduser("~")}/Saved Games/DX01', f'{name}_{time[0]}_{time[1]}.json', ("DX01", content))
 
 
 class Barrage(Base):
@@ -698,7 +696,7 @@ class Item(Base):
     def update(oc, locate):
         oc.speed -= 0.1
         if oc.speed <= 0:
-            oc.rect.center = vector(oc.rect.center, locate, 8)[0]
+            oc.rect.center = vector(oc.rect.center, locate, 10)
         else:
             oc.y -= oc.speed
 

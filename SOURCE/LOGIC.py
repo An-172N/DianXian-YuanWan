@@ -1,7 +1,6 @@
 # (C)opyright 2026 An_172N
 # 此代码遵循 GPLv3.0 协议
 
-
 import math
 import json
 import os
@@ -16,14 +15,14 @@ def vector(current, target, step):
     dist_sq = dx * dx + dy * dy
 
     if not dist_sq:
-        return (tx, ty), (0.0, 0.0)
+        return (tx, ty)
 
     distance = math.sqrt(dist_sq)
     dx, dy = dx / distance, dy / distance
 
     if dist_sq < step * step:
-        return (tx, ty), (dx, dy)
-    return (cx + dx * step, cy + dy * step), (dx, dy)
+        return (tx, ty)
+    return (cx + dx * step, cy + dy * step)
 
 
 def rotate(point, angle, center):
@@ -60,7 +59,7 @@ def bearing(point_a, point_b):
     return math.degrees(math.atan2(bx - ax, by - ay)) % 360
 
 
-def record_file(folder, file, content, encoding='utf-8'):
+def record_json(folder, file, content, encoding='utf-8'):
     if not os.path.exists(folder):
         os.makedirs(folder)
     dump = [content[0]]
@@ -71,29 +70,30 @@ def record_file(folder, file, content, encoding='utf-8'):
 
 
 def get_files(folder, extension='.json', reverse=True):
+    files = []
     try:
-        files = []
         for file in os.listdir(folder):
-            if file.endswith(extension) and os.path.isfile(path := os.path.join(folder, file)):
+            path = os.path.join(folder, file)
+            if file.endswith(extension) and os.path.isfile(path):
                 time = os.path.getmtime(path)
                 files.append((time, path))
         files.sort(key=lambda x: x[0], reverse=reverse)
 
         return [path for _, path in files]
     except:
-        return []
+        return files
 
 
-def rectangle(size, border, color, radius=(-1, -1, -1, -1)):
+def draw_rectangle(size, border, color, radius=(-1, -1, -1, -1)):
     return (
-        surface := pygame.Surface(size, pygame.SRCALPHA),
+        surface := pygame.Surface(size, pygame.SRCALPHA).convert_alpha(),
         pygame.draw.rect(surface, color, surface.get_rect(), border, -1, *radius)
     )[0]
 
 
-def circle(xy_size, border, color):
+def draw_circle(xy_size, border, color):
     return (
-        surface := pygame.Surface((xy_size[2], xy_size[3]), pygame.SRCALPHA),
+        surface := pygame.Surface((xy_size[2], xy_size[3]), pygame.SRCALPHA).convert_alpha(),
         pygame.draw.ellipse(surface, color, xy_size, border)
     )[0]
 

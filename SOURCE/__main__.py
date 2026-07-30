@@ -10,7 +10,7 @@ import random
 def main():
     project = '点线 Project'
     title = '圆玩 ~ Oceanfront'
-    version = '1.0.0'
+    version = '1.0.1'
     author = 'An_172N'
     sys.dont_write_bytecode = True
     sys.modules['numpy'] = None

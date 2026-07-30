@@ -1,13 +1,10 @@
 # (C)opyright 2026 An_172N
 # 此代码遵循 GPLv3.0 协议
 
-
 from io import BytesIO
 from pkgutil import get_data
 
-
 import pygame as pg
-
 
 from LOGIC import *
 
@@ -41,7 +38,7 @@ get_logs = lambda date, score, flashed, flash, win, lose: (
     f"使用了 {flashed} 次形闪",
     f"最终形闪点为 {flash} 点"
 )[::-1]
-screen = pygame.display.set_mode((480, 360), pygame.FULLSCREEN|pygame.SCALED)
+screen = pg.display.set_mode((480, 360), pg.FULLSCREEN|pg.SCALED)
 font = pg.font.Font(BytesIO(asset('ASSET/FONT/UNI3500.otf')), 15)
 icon = pg.display.set_icon(pg.image.load(BytesIO(asset('ASSET/IMAGE/ICON.png'))))
 
@@ -56,7 +53,7 @@ sound_cache = {
 
 char_image = pg.image.load(BytesIO(asset('ASSET/IMAGE/CHAR.png'))).convert()
 basic_image = pg.image.load(BytesIO(asset('ASSET/IMAGE/BASIC.png'))).convert()
-white_rect = rectangle((8, 8), 0, color_dict[8]).convert_alpha()
+white_rect = draw_rectangle((8, 8), 0, color_dict[8])
 char_image.set_colorkey(color_dict[10])
 basic_image.set_colorkey(color_dict[10])
 picture = {
@@ -71,16 +68,16 @@ picture = {
 
 
 barrage_cache = {
-    (2, color_dict[8]): circle((0, 0, 8, 8), 0, color_dict[8]),
+    (2, color_dict[8]): draw_circle((0, 0, 8, 8), 0, color_dict[8]),
     (1, color_dict[8]): white_rect,
     (0, color_dict[8]): basic_image
 }
 
 
-item_cache = rectangle((9, 9), 2, color_dict[6]).convert()
+item_cache = draw_rectangle((9, 9), 2, color_dict[6]).convert()
 
 
 particle_cache = {
-    (2, color_dict[6]): rectangle((2, 2), 0, color_dict[6]).convert(),
+    (2, color_dict[6]): draw_rectangle((2, 2), 0, color_dict[6]).convert(),
     (2, color_dict[8]): white_rect.subsurface((0, 0, 2, 2)),
 }
