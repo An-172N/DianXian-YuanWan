@@ -600,9 +600,13 @@ class Log:
     def __init__(oc):
         oc.name = ''
         oc.log = None
-        oc.json_files = get_files(f'{os.path.expanduser("~")}/Saved Games/DX01', '.json')
+        oc.files = get_files(f'{os.path.expanduser("~")}/Saved Games/DX01')
         oc.index = 0
-        oc.total_files = len(oc.json_files)
+        oc.total_files = len(oc.files)
+
+    def load_file(oc, file):
+        with open(file, 'r', encoding='utf-8') as f:
+            oc.log = f.readline().split(',')
 
 
 def score_summary(win, power, max_power):
@@ -610,11 +614,6 @@ def score_summary(win, power, max_power):
         win * 16384 +
         int(power / max_power * 8192)
     )
-
-
-def load_json(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
-        return json.load(f)
 
 
 def stage_loader(stage, barrage_group, particle_group, brick_group):
@@ -659,18 +658,10 @@ def fade_surface(alpha, timer, is_exit, surface, screen):
 
 
 def save_file(name, score, flashed, power, win, lose):
-    name = name.translate(str.maketrans('!<>:"/\\|?*', '__________'))
+    name = name.translate(str.maketrans('!<>:"/\\|?*,', '___________'))
     time = (datetime.now().strftime('%Y-%m-%d'), datetime.now().strftime('%H-%M-%S'))
-    content = {
-        'Name': name,
-        'Score': score,
-        'Flashed': flashed,
-        'Win': win,
-        'Lose': lose,
-        'Power': power,
-        'Date': time[0],
-    }
-    record_json(f'{os.path.expanduser("~")}/Saved Games/DX01', f'{name}_{time[0]}_{time[1]}.json', ("DX01", content))
+    content = f"{name},{score},{flashed},{win},{lose},{power},{time[0]}"
+    record_file(f'{os.path.expanduser("~")}/Saved Games/DX01', f'{name}_{time[0]}_{time[1]}.dx01', content)
 
 
 class Barrage(Base):
@@ -786,13 +777,13 @@ def save_menu():
 def check_menu():
     try:
         if one.pop_timer == 0:
-            logs.log = load_json(logs.json_files[logs.index])[1]
+            logs.load_file(logs.files[logs.index])
         total_files = logs.total_files
         log = logs.log
         title = f"玩耍日志簿第 {total_files - logs.index} / {total_files} 页"
-        text = get_logs(log['Date'], log['Score'], log['Flashed'], log['Power'], log['Win'], log['Lose'])
+        text = get_logs(log[6], log[1], log[2], log[5], log[3], log[4])
         key = ("Esc 合上", "Del 丢掉", "<-> 翻页")
-        full_menu(title, text, key, f"由 {log['Name']} 当裁判")
+        full_menu(title, text, key, f"由 {log[0]} 当裁判")
     except:
         one.is_check = False
 
@@ -1083,7 +1074,7 @@ keydown_over_dict = {
 
 
 keydown_check_dict = {
-    pg.K_DELETE: lambda: (os.remove(logs.json_files[logs.index]), logs.__init__()),
+    pg.K_DELETE: lambda: (os.remove(logs.files[logs.index]), logs.__init__()),
     pg.K_ESCAPE: lambda: (setattr(one, "is_check", False), reset()),
     pg.K_LEFT: lambda: (setattr(logs, "index", (logs.index - 1) if logs.index > 0 else logs.total_files - 1)),
     pg.K_RIGHT: lambda: (setattr(logs, "index", (logs.index + 1) if logs.index < logs.total_files - 1 else 0))

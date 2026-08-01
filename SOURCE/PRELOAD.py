@@ -79,5 +79,5 @@ item_cache = draw_rectangle((9, 9), 2, color_dict[6]).convert()
 
 particle_cache = {
     (2, color_dict[6]): draw_rectangle((2, 2), 0, color_dict[6]).convert(),
-    (2, color_dict[8]): white_rect.subsurface((0, 0, 2, 2)),
+    (2, color_dict[8]): white_rect.subsurface((0, 0, 2, 2))
 }
