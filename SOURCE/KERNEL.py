@@ -606,7 +606,7 @@ class Log:
 
     def load_file(oc, file):
         with open(file, 'r', encoding='utf-8') as f:
-            oc.log = f.readline().split(',')
+            oc.log = f.readline(128).split(',', 7)
 
 
 def score_summary(win, power, max_power):
