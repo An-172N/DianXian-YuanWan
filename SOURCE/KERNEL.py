@@ -964,7 +964,7 @@ def barrage_collide():
                 major.collided.condition = True
                 major.flash = clamp(major.flash - 4, -8, major.max_flash)
                 two.flashed += 1
-                one.char.goal += 2048
+                one.char.goal += 4096
                 for _ in range(8):
                     spawn_particles(one.particle_group, 2, pos, (6, 12), major.color, color_dict[8])
                 sound_cache["fire"].play()
