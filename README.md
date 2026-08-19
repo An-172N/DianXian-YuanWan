@@ -9,11 +9,11 @@
 
 **本来想做成能切换角色而且机制有点不同的打砖块的**  
 
-**但是发现太复杂了** *（已经实现了*  
+**但是发现太复杂了（已经实现了**  
 
-**所以本作并不是打砖块，可能偏向于文花帖这类作品** *（？*  
+**所以本作并不是打砖块，可能偏向于文花帖这类作品（？**  
 
-**因为现在几乎不会怎么画画所以就没有立绘了** *（但像素画还是有的*  
+**因为做这个游戏的时候几乎不会怎么画画所以就没有立绘了（但像素画还是有的**  
 
 **设定是有 4 面**  
 
@@ -33,7 +33,7 @@
 ## 按键说明书
 - ### 主界面
   - 按 Z 开玩
-  - 按 C 查看日志 *（有日志看日志，没日志当木鱼*
+  - 按 C 查看日志（有日志看日志，没日志当木鱼
   - 按 Q 回家
 - ### 游戏ing
   - 按 ↑↓←→ 移动
@@ -43,38 +43,38 @@
   - 主主角操控看[主主角](#主主角)吧
 - ### 休息ing
   - 按 Esc 休息完了
-  - 不想玩就按 Del 吧 *（返回主界面了*
+  - 不想玩就按 Del 吧（返回主界面了
 - ### 存日志
   - 按 Esc 不存
-  - 按 Enter 存 *（存在 用户根目录/Saved Games/DX01 里*
-  - 可以存裁判的名称 *（最多 8 个字符*
+  - 按 Enter 存（存在 用户根目录/Saved Games/DX01 里
+  - 可以存裁判的名称（最多 8 个字符
 - ### 看日志
   - 按 Esc 合上
   - 按 Del 扔掉
-  - 翻页则按 ←→  *（只能看最新的 32 页*
+  - 翻页则按 ←→（只可以看最新的 8 页
 
 ---
 
 ## 主主角
 - ### H.罗
   - 形闪
-    - 最高 48 点，最低 -8 点
-    - 每 24 点蓄力加 1 点形闪
-    - 每撞一次弹幕减 4 点形闪
+    - 最高 48 点，最低 -48 点
+    - 每 72 点蓄力加 1 点形闪
+    - 每撞一次弹幕减 8 点形闪
   - 形力
     - 最高 24 点
-    - 达到最高点按 SPACE 释放形分 *（把所有弹幕转成蓄力点后吸过来*
+    - 达到最高点按 SPACE 释放形分（把所有弹幕转成蓄力点后吸过来
   - 形态
     - 长按 Z 切换为特殊形态
       - 一旦松开会切换回正常形态
-    - 正常形态为大胆状态 *（普速移动*
-    - 特殊形态为谨慎状态 *（慢速移动*
+    - 正常形态为大胆状态（普速移动
+    - 特殊形态为谨慎状态（慢速移动
 
 ---
 
 ## 说一下规则吧
 - ### 形点
-  - 绿色为蓄力点
+  - 绿色为蓄力点（哇，好多 BOMB *错乱*
 - ### 分数
   - 普通
     - 每拾一个蓄力点 + 64
@@ -88,49 +88,43 @@
   - 如果[剩余分数](#分数)为 0 或者负数，则算赢
   - 否则算输
 - ### 擦弹
-  - 每擦一次弹加 1 点形力
+  - 每擦一次弹加 1 点形力（每个弹幕只能擦一次
 - ### 无敌
   - 被弹幕撞到后有 3.5 秒的无敌时间
   - 释放形分后则有 2 秒
-  - 在无敌时间不会加形力
-
----
-
-## 分发包清单
-- ### CHAR.md
-  - 这是角色们的介绍文档
-  - 分有主主角和主角 *（主角就是每面末站的 BOSS，按面数从上到下排*
-- ### DX01.pyz
-  - 游戏的主程序
-  - 双击就可以开玩啦 *（要有 [Python 和 Pygame-CE 环境](#本项目使用以下第三方资源)*
-- ### LICENSE
-  - 顾名思义就是许可证
-  - 本游戏的程序代码就是以这个协议开源的 *（源神*
-- ### README.md
-  - 就是你正在阅读的
+  - 在无敌时间内不会加形力
 
 ---
 
 ## 备注区
 - ### 本项目版权声明
-  - 程序代码遵循 [GNU GPLv3.0](./LICENSE) 协议
-  - CHAR.md 保留所有权利，且禁止用于 AI 训练 *（认真的*
+  - 程序代码遵循 [GNU GPLv3.0](https://www.gnu.org/licenses/gpl-3.0.html) 协议
+  - CHAR.md 保留所有权利，且禁止用于 AI 训练（认真的
+- ### 本项目包内特定文件说明
+  - ./CHAR.md
+    - 这是角色们的介绍文档
+    - 分有主主角和主角
+    - 像[上面](#本项目版权声明)说的那样保留所有权利（当然有没有这个文件项目都可以运行
+  - ./LICENSE
+    - 顾名思义就是许可证
+    - 本项目的程序代码就是以这个协议开源的（源神
+  - ./README.md
+    - 就是你正在阅读的
 - ### 本项目使用以下第三方资源
-  - 编程语言：[Python](https://www.python.org) *（可能需要安装哦*
-    - 推荐 3.10 - 3.14
-  - 游戏库：[Pygame-CE](https://github.com/pygame-community/pygame-ce) *（这个也是*
+  - 编程语言：[Python](https://www.python.org)（可能需要安装哦
+    - 推荐 3.10 - π（只测试过这几个版本
+  - 游戏库：[Pygame-CE](https://github.com/pygame-community/pygame-ce)（这个也是
     - 可以在命令提示符输入 pip install pygame-ce 回车
-  - 字体：[GNU Unifont](https://www.unifoundry.com/unifont) *（子集化后的，我称它为 Uni3500*
-    - 子集化用到的
-      - 工具：[字体子集化](http://font.ssjjss.com/font-subset)、[Fonttools](https://github.com/fonttools/fonttools)
-      - 仓库：[常用汉字集](https://gitee.com/feng_xingkai/chinese)
-    - 遵循 [SIL OFL 1.1](https://www.unifoundry.com/OFL-1.1.txt) 协议
+    - 如果有 Pygame 得先 pip uninstall pygame 再执行安装哦（为了避免包冲突
+  - 字体（如果显示异常就在下面任选一个下载安装哦，应该都是 .otf 格式
+    - 第一：[GNU Unifont](https://www.unifoundry.com/unifont)
+    - 第二：[Noto Sans (CJK) SC](https://github.com/notofonts/noto-cjk)（安装的话选 Regular 吧，如果 Light 有效的话就选 Light
   - 音频
-    - 制作：[PMD](http://www5.airnet.ne.jp/kajapon/tool.html) *（喜欢 YM2203*
+    - 制作：[PMD](http://www5.airnet.ne.jp/kajapon/tool.html)（喜欢 YM2203
     - 处理：[WaveShop](https://github.com/victimofleisure/WaveShop)
   - 图像：[Krita](https://krita.org/zh-cn)
   - 打包：[7-Zip](https://www.7-zip.org)
-- ### 本项目网址 *（感兴趣的话就点个星吧~*
+- ### 本项目网址（感兴趣的话就点个星吧~
   - https://github.com/An-172N/DianXian-YuanWan
 
 ---
