@@ -23,48 +23,27 @@ def read_resource(file):
 def main():
     title = '圆玩 ~ Oceanfront'
     version = '1.0.2'
-    author = 'An_172N'
     sys.dont_write_bytecode = True
     sys.modules['numpy'] = None
     parser = argparse.ArgumentParser()
-    for i, j in (('-s', 1), ('-l', 1), ('-f', 3), ('-p', 0), ('-sd', None)):
+    for i, j in (('-s', 1), ('-sd', None)):
         parser.add_argument(i, type=int, default=j)
     args = parser.parse_args()
     random.seed(args.sd)
-    while True:
-        choose = input(
-            f"=================={title}==================\n"
-            "OC：准备去玩\n"
-            "R ：读我\n"
-            "L ：程序代码许可\n"
-            "Q ：玩完回家\n"
-            f"================Ver {version} | By {author}===============\n"
-        ).upper()
-        if choose == "OC":
-            import pygame
 
-            clock = pygame.time.Clock()
-            pygame.display.init()
-            pygame.font.init()
-            pygame.mixer.init()
-            pygame.mixer.set_num_channels(2)
+    import pygame
 
-            import KERNEL
+    clock = pygame.time.Clock()
+    pygame.display.init()
+    pygame.display.set_caption(title)
+    pygame.font.init()
+    pygame.mixer.init()
+    pygame.mixer.set_num_channels(2)
 
-            pygame.display.set_caption(title)
-            KERNEL.update(clock, int(args.s), version, title)
-            os.execv(sys.executable, ['python'] + sys.argv)
-        elif choose == "R":
-            content = read_resource("README.md")
-            print(content)
-        elif choose == "L":
-            content = read_resource("LICENSE")
-            print(content)
-        elif choose == "Q":
-            print("海胆该怎么吃呢？")
-            break
-        else:
-            print("没记错的话是去玩吧？")
+    import KERNEL
+
+    print(read_resource("README.md"))
+    KERNEL.update(clock, int(args.s), version, title)
 
 
 if __name__ == "__main__":
