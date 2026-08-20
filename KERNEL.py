@@ -1068,6 +1068,7 @@ def update(clock, stage, version, title):
 one = One()
 two = Two()
 logs = Log(f'{os.path.expanduser("~")}/Saved Games/DX01', '.dx01')
+logs.get_logs()
 major = Hro(one.plane_group)
 
 
