@@ -34,13 +34,13 @@ def main():
     while True:
         choose = input(
             f"=================={title}==================\n"
-            "ST: 准备去玩\n"
+            "OC：准备去玩\n"
             "R ：读我\n"
             "L ：程序代码许可\n"
-            "Q ：还是算了\n"
+            "Q ：玩完回家\n"
             f"================Ver {version} | By {author}===============\n"
         ).upper()
-        if choose == "ST":
+        if choose == "OC":
             import pygame
 
             clock = pygame.time.Clock()
@@ -61,7 +61,7 @@ def main():
             content = read_resource("LICENSE")
             print(content)
         elif choose == "Q":
-            print("下次一定！")
+            print("海胆该怎么吃呢？")
             break
         else:
             print("没有这个哦~")
