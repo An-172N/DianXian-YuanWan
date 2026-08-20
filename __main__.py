@@ -64,7 +64,7 @@ def main():
             print("海胆该怎么吃呢？")
             break
         else:
-            print("没有这个哦~")
+            print("没记错的话是去玩吧？")
 
 
 if __name__ == "__main__":
