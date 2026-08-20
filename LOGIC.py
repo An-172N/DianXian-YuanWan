@@ -188,43 +188,43 @@ class Menu:
             surface = self.surface.subsurface(subsurface)
         else:
             surface = self.surface
-        if self.timer < interval[len(interval) - 1] + 1 or shortly:
-            if self.timer == interval[len(interval) - 1]:
+        if self.timer < interval[-1] + 1 or shortly:
+            def pop_animate(interval, group, shortly):
+                if not shortly:
+                    if self.timer in interval:
+                        self.surface.fill(self.surface_colors[self._count])
+                        self._count += 1
+                        for i in range(len(group)):
+                            if self.timer >= interval[i]:
+                                bilt_text(group[i])
+                else:
+                    color = self.surface_colors[-1]
+                    self.surface.fill(color)
+                    for i in range(len(group)):
+                        bilt_text(group[i])
+
+            def bilt_text(sub_group):
+                for text_surface, pos, is_right in sub_group:
+                    if is_right:
+                        rect = text_surface.get_rect(topright=(self.surface.get_rect().right - pos[0], pos[1]))
+                        self.surface.blit(text_surface, rect)
+                    else:
+                        self.surface.blit(text_surface, pos)
+
+            if self.timer == interval[-1]:
                 sound.play()
             for text in texts:
                 sub_group = []
                 for i in range(len(text[0])):
                     sub_group.append((self.font.render(text[0][i], False, self.font_color), (text[1], text[2] + text[3] * i), text[4]))
                 group.append(sub_group)
-            self._pop_animate(interval, group, shortly)
+            pop_animate(interval, group, shortly)
             self.timer += 1
         self.screen.blit(surface, self.pos)
 
     def reset_timer(self):
         self.timer = 0
         self._count = 0
-
-    def _pop_animate(self, interval, group, shortly):
-        if not shortly:
-            if self.timer in interval:
-                self.surface.fill(self.surface_colors[self._count])
-                self._count += 1
-                for i in range(len(group)):
-                    if self.timer >= interval[i]:
-                        self._bilt_text(group[i])
-        else:
-            color = self.surface_colors[len(self.surface_colors) - 1]
-            self.surface.fill(color)
-            for i in range(len(group)):
-                self._bilt_text(group[i])
-
-    def _bilt_text(self, group):
-        for text_surface, pos, is_right in group:
-            if is_right:
-                rect = text_surface.get_rect(topright=(self.surface.get_rect().right - pos[0], pos[1]))
-                self.surface.blit(text_surface, rect)
-            else:
-                self.surface.blit(text_surface, pos)
 
 
 class Talk:
@@ -254,26 +254,32 @@ class Talk:
 
 
 class Log:
-    def __init__(self, folder, extension='.dx00', reverse=True, count=8):
+    def __init__(self, folder, extension='.dx00', reverse=True, max_read=8):
         self.folder = folder
         self.extension = extension
+        self.reverse = reverse
+        self.max_read = max_read
+        self.files = []
+        self.log = None
+        self.name = ''
+        self.index = 0
+        self.total_files = 0
+
+    def get_logs(self):
         try:
             with os.scandir(self.folder) as f:
                 def file_iter():
                     for file in f:
-                        if file.is_file() and file.name.endswith(extension):
+                        if file.is_file() and file.name.endswith(self.extension):
                             yield (file.stat().st_mtime, file.path)
-
-                if reverse:
-                    top = heapq.nlargest(count, file_iter(), key=lambda x: x[0])
+    
+                if self.reverse:
+                    top = heapq.nlargest(self.max_read, file_iter(), key=lambda x: x[0])
                 else:
-                    top = heapq.nsmallest(count, file_iter(), key=lambda x: x[0])
+                    top = heapq.nsmallest(self.max_read, file_iter(), key=lambda x: x[0])
                 self.files = [path for _, path in top]
         except:
             self.files = []
-        self.log = None
-        self.name = ''
-        self.index = 0
         self.total_files = len(self.files)
 
     def record_log(self, file, content, encode='utf-8'):

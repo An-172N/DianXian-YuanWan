@@ -776,6 +776,7 @@ def reset():
     one.__init__()
     two.__init__()
     logs.__init__(f'{os.path.expanduser("~")}/Saved Games/DX01', '.dx01')
+    logs.get_logs()
     major.__init__(one.plane_group)
 
 
@@ -1103,7 +1104,7 @@ keydown_over_dict = {
 
 
 keydown_check_dict = {
-    pg.K_DELETE: lambda: logs.delete_log(),
+    pg.K_DELETE: lambda: (logs.delete_log(), logs.get_logs()),
     pg.K_ESCAPE: lambda: reset(),
     pg.K_LEFT: lambda: logs.turn_page("down"),
     pg.K_RIGHT: lambda: logs.turn_page("up")
