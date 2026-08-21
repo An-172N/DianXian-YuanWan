@@ -113,19 +113,17 @@
 - ### 本项目使用以下第三方资源
   - 编程语言：[Python](https://www.python.org)（可能需要安装哦
     - 推荐 3.10 - π（只测试过这几个版本
-  - 游戏库：[Pygame-CE](https://github.com/pygame-community/pygame-ce)（这个也是
+  - 游戏库：[Pygame-CE](https://pyga.me)（这个也是
     - 可以在命令提示符输入 pip install pygame-ce 回车
     - 如果有 Pygame 得先 pip uninstall pygame 再执行安装哦（为了避免包冲突
   - 字体（如果显示异常就在下面任选一个下载安装哦，应该都是 .otf 格式
     - 第一：[GNU Unifont](https://www.unifoundry.com/unifont)
     - 第二：[Noto Sans (CJK) SC](https://github.com/notofonts/noto-cjk)（安装的话选 Regular 吧，如果 Light 有效的话就选 Light
   - 音频
-    - 制作：[PMD](http://www5.airnet.ne.jp/kajapon/tool.html)（喜欢 YM2203
-    - 处理：[WaveShop](https://github.com/victimofleisure/WaveShop)
+    - 制作：[PMD](http://www5.airnet.ne.jp/kajapon/tool.html)（YM2203 YYDS
+    - 处理：[WaveShop](https://waveshop.sourceforge.net)
   - 图像：[Krita](https://krita.org/zh-cn)
   - 打包：[7-Zip](https://www.7-zip.org)
-- ### 本项目网址（感兴趣的话就点个星吧~
-  - https://github.com/An-172N/DianXian-YuanWan
 
 ---
 
